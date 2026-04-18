@@ -20,12 +20,9 @@ void main() {
       DockingTabs tabs = DockingTabs([itemD, itemE]);
       DockingColumn column = DockingColumn([itemA, row, tabs]);
 
-      expect(() => LayoutStringify.stringifyParent(parent: column),
-          childNotBelongAnyLayoutException());
-      expect(() => LayoutStringify.stringifyParent(parent: row),
-          childNotBelongAnyLayoutException());
-      expect(() => LayoutStringify.stringifyParent(parent: tabs),
-          childNotBelongAnyLayoutException());
+      expect(() => LayoutStringify.stringifyParent(parent: column), childNotBelongAnyLayoutException());
+      expect(() => LayoutStringify.stringifyParent(parent: row), childNotBelongAnyLayoutException());
+      expect(() => LayoutStringify.stringifyParent(parent: tabs), childNotBelongAnyLayoutException());
 
       DockingLayout(root: column);
 
@@ -45,22 +42,14 @@ void main() {
 
       DockingLayout(root: column);
 
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: column),
-          '0;;');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: row),
-          '0;;0.4');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: tabs),
-          '0;;');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemA),
-          '0;;');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemB),
-          '0;;0.2');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemC),
-          '3;idC;');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemD),
-          '3;1.2;');
-      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemE),
-          '0;;0.3');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: column), '0;;');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: row), '0;;0.4');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: tabs), '0;;');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemA), '0;;');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemB), '0;;0.2');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemC), '3;idC;');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemD), '3;1.2;');
+      expect(LayoutStringify.stringifyArea(parser: defaultParser, area: itemE), '0;;0.3');
     });
     test('stringifyTabs', () {
       DockingItem itemA = dockingItem('a');
@@ -90,43 +79,32 @@ void main() {
 
       LayoutParser parser = CustomIdParser();
 
-      expect(
-          LayoutStringify.stringifyArea(parser: parser, area: itemA), '3;2.2;');
-      expect(
-          LayoutStringify.stringifyArea(parser: parser, area: itemB), '3;4.3;');
-      expect(
-          LayoutStringify.stringifyArea(parser: parser, area: row), '3;6.5;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: itemA), '3;2.2;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: itemB), '3;4.3;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: row), '3;6.5;');
     });
     test('stringifyArea - CustomIdClassParser', () {
-      DockingItem itemA =
-          DockingItem(id: CustomClass('itemA'), widget: Container());
-      DockingItem itemB =
-          DockingItem(id: CustomClass('itemB'), widget: Container());
+      DockingItem itemA = DockingItem(id: CustomClass('itemA'), widget: Container());
+      DockingItem itemB = DockingItem(id: CustomClass('itemB'), widget: Container());
       DockingRow row = DockingRow([itemA, itemB], id: CustomClass('row'));
 
       DockingLayout(root: row);
 
       LayoutParser parser = CustomIdClassParser();
 
-      expect(LayoutStringify.stringifyArea(parser: parser, area: itemA),
-          '5;itemA;');
-      expect(LayoutStringify.stringifyArea(parser: parser, area: itemB),
-          '5;itemB;');
-      expect(
-          LayoutStringify.stringifyArea(parser: parser, area: row), '3;row;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: itemA), '5;itemA;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: itemB), '5;itemB;');
+      expect(LayoutStringify.stringifyArea(parser: parser, area: row), '3;row;');
     });
     test('stringify - simple', () {
-      DockingItem itemA =
-          DockingItem(id: 'idA', value: 'valueA', widget: Container());
-      DockingItem itemB =
-          DockingItem(id: 'idB', value: 'valueB', widget: Container());
+      DockingItem itemA = DockingItem(id: 'idA', value: 'valueA', widget: Container());
+      DockingItem itemB = DockingItem(id: 'idB', value: 'valueB', widget: Container());
 
       DockingRow row = DockingRow([itemA, itemB], weight: 1);
 
       DockingLayout layout = DockingLayout(root: row);
 
-      expect(layout.stringify(parser: defaultParser),
-          'V1:3:1(R;0;;1.0;2,3),2(I;3;idA;;F),3(I;3;idB;;F)');
+      expect(layout.stringify(parser: defaultParser), 'V1:3:1(R;0;;1.0;2,3),2(I;3;idA;;F),3(I;3;idB;;F)');
     });
   });
 }
@@ -141,8 +119,7 @@ class DefaultLayoutParser extends LayoutParser with LayoutParserMixin {}
 
 class DefaultAreaBuilder extends AreaBuilder with AreaBuilderMixin {
   @override
-  DockingItem buildDockingItem(
-      {required id, required double? weight, required bool maximized}) {
+  DockingItem buildDockingItem({required id, required double? weight, required bool maximized}) {
     throw UnimplementedError();
   }
 }
@@ -163,7 +140,7 @@ class CustomIdParser extends DefaultLayoutParser {
 class CustomIdClassParser extends DefaultLayoutParser {
   @override
   String idToString(dynamic id) {
-    CustomClass customClass = id;
+    CustomClass customClass = id as CustomClass;
     return customClass.value;
   }
 

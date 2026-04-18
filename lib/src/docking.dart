@@ -8,22 +8,29 @@ import 'package:docking/src/on_item_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_split_view/multi_split_view.dart';
+import 'package:tabbed_view/tabbed_view.dart';
 
 /// The docking widget.
 class Docking extends StatefulWidget {
-  const Docking(
-      {Key? key,
-      this.layout,
-      this.onItemSelection,
-      this.onItemClose,
-      this.itemCloseInterceptor,
-      this.dockingButtonsBuilder,
-      this.maximizableItem = true,
-      this.maximizableTab = true,
-      this.maximizableTabsArea = true,
-      this.antiAliasingWorkaround = true,
-      this.draggable = true})
-      : super(key: key);
+  const Docking({
+    Key? key,
+    this.layout,
+    this.onItemSelection,
+    this.onItemClose,
+    this.itemCloseInterceptor,
+    this.dockingButtonsBuilder,
+    this.maximizableItem = true,
+    this.maximizableTab = true,
+    this.maximizableTabsArea = true,
+    this.antiAliasingWorkaround = true,
+    this.draggable = true,
+    this.onDividerTap,
+    this.onDividerDoubleTap,
+    this.onDividerDragStart,
+    this.onDividerDragUpdate,
+    this.onDividerDragEnd,
+    this.tabbedViewController,
+  }) : super(key: key);
 
   final DockingLayout? layout;
   final OnItemSelection? onItemSelection;
@@ -35,6 +42,23 @@ class Docking extends StatefulWidget {
   final bool maximizableTabsArea;
   final bool antiAliasingWorkaround;
   final bool draggable;
+
+  final TabbedViewController? tabbedViewController;
+
+  /// Signature for when a divider tap has occurred.
+  final DividerTapCallback? onDividerTap;
+
+  /// Signature for when a divider double tap has occurred.
+  final DividerTapCallback? onDividerDoubleTap;
+
+  /// Function to listen to divider dragging start.
+  final OnDividerDragEvent? onDividerDragStart;
+
+  /// Function to listen to divider dragging update.
+  final OnDividerDragEvent? onDividerDragUpdate;
+
+  /// Function to listen to divider dragging end.
+  final OnDividerDragEvent? onDividerDragEnd;
 
   @override
   State<StatefulWidget> createState() => _DockingState();
@@ -75,12 +99,9 @@ class _DockingState extends State<Docking> {
         List<Widget> children = [];
         for (DockingArea area in areas) {
           if (area != widget.layout!.maximizedArea!) {
-            if (area is DockingItem &&
-                area.globalKey != null &&
-                area.parent != widget.layout?.maximizedArea) {
+            if (area is DockingItem && area.globalKey != null && area.parent != widget.layout?.maximizedArea) {
               // keeping alive other areas
-              children.add(ExcludeFocus(
-                  child: Offstage(child: _buildArea(context, area))));
+              children.add(ExcludeFocus(child: Offstage(child: _buildArea(context, area))));
             }
           }
         }
@@ -102,7 +123,8 @@ class _DockingState extends State<Docking> {
           dragOverPosition: _dragOverPosition,
           draggable: widget.draggable,
           item: area,
-          onItemSelection: widget.onItemSelection,
+          tabbedViewController: widget.tabbedViewController,
+          //onItemSelection: widget.onItemSelection,
           itemCloseInterceptor: widget.itemCloseInterceptor,
           onItemClose: widget.onItemClose,
           dockingButtonsBuilder: widget.dockingButtonsBuilder,
@@ -119,7 +141,8 @@ class _DockingState extends State<Docking> {
             dragOverPosition: _dragOverPosition,
             draggable: widget.draggable,
             item: area.childAt(0),
-            onItemSelection: widget.onItemSelection,
+            tabbedViewController: widget.tabbedViewController,
+            //onItemSelection: widget.onItemSelection,
             itemCloseInterceptor: widget.itemCloseInterceptor,
             onItemClose: widget.onItemClose,
             dockingButtonsBuilder: widget.dockingButtonsBuilder,
@@ -138,8 +161,7 @@ class _DockingState extends State<Docking> {
           maximizableTab: widget.maximizableTab,
           maximizableTabsArea: widget.maximizableTabsArea);
     }
-    throw UnimplementedError(
-        'Unrecognized runtimeType: ' + area.runtimeType.toString());
+    throw UnimplementedError('Unrecognized runtimeType: ' + area.runtimeType.toString());
   }
 
   Widget _row(BuildContext context, DockingRow row) {
@@ -148,12 +170,21 @@ class _DockingState extends State<Docking> {
       children.add(_buildArea(context, child));
     });
 
+    /* final MultiSplitViewController _controller = MultiSplitViewController(areas: 
+      children.map((child) => Area(builder: (context, area) => child)).toList()
+    ); */
+
     return MultiSplitView(
         key: row.key,
-        children: children,
+        //children: children,
         axis: Axis.horizontal,
         controller: row.controller,
-        antiAliasingWorkaround: widget.antiAliasingWorkaround);
+        antiAliasingWorkaround: widget.antiAliasingWorkaround,
+        onDividerTap: widget.onDividerTap,
+        onDividerDoubleTap: widget.onDividerDoubleTap,
+        onDividerDragStart: widget.onDividerDragStart,
+        onDividerDragUpdate: widget.onDividerDragUpdate,
+        onDividerDragEnd: widget.onDividerDragEnd);
   }
 
   Widget _column(BuildContext context, DockingColumn column) {
@@ -164,10 +195,15 @@ class _DockingState extends State<Docking> {
 
     return MultiSplitView(
         key: column.key,
-        children: children,
+        //children: children,
         axis: Axis.vertical,
         controller: column.controller,
-        antiAliasingWorkaround: widget.antiAliasingWorkaround);
+        antiAliasingWorkaround: widget.antiAliasingWorkaround,
+        onDividerTap: widget.onDividerTap,
+        onDividerDoubleTap: widget.onDividerDoubleTap,
+        onDividerDragStart: widget.onDividerDragStart,
+        onDividerDragUpdate: widget.onDividerDragUpdate,
+        onDividerDragEnd: widget.onDividerDragEnd);
   }
 
   void _forceRebuild() {
