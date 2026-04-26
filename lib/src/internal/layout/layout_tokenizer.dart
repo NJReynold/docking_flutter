@@ -15,7 +15,7 @@ class Tokenizer {
 
   String removeNext() {
     if (_layout.isEmpty) {
-      throw new StateError('Insufficient characters.');
+      throw StateError('Insufficient characters.');
     }
     final String next = _layout.substring(0, 1);
     _layout = _layout.substring(1);
@@ -28,9 +28,9 @@ class Tokenizer {
     if (token.isEmpty) {
       throw StateError('Parent without child.');
     }
-    List<int> indexes = [];
+    final List<int> indexes = [];
     token.split(',').forEach((str) {
-      int? index = int.tryParse(str);
+      final int? index = int.tryParse(str);
       if (index == null) {
         throw StateError('Invalid index: $str');
       }
@@ -40,7 +40,7 @@ class Tokenizer {
   }
 
   bool removeFirstRequiredBool(
-      {required String stop, required String errorMessage}) {
+      {required String stop, required String errorMessage,}) {
     final String token =
         removeFirstToken(stop: stop, errorMessage: errorMessage);
     if (token == 'T') {
@@ -53,7 +53,7 @@ class Tokenizer {
   }
 
   double? removeFirstOptionalDouble(
-      {required String stop, required String errorMessage}) {
+      {required String stop, required String errorMessage,}) {
     final String token =
         removeFirstToken(stop: stop, errorMessage: errorMessage);
     if (token.isEmpty) {
@@ -67,7 +67,7 @@ class Tokenizer {
   }
 
   int removeFirstRequiredInt(
-      {required String stop, required String errorMessage}) {
+      {required String stop, required String errorMessage,}) {
     final String token =
         removeFirstToken(stop: stop, errorMessage: errorMessage);
     final int? number = int.tryParse(token);
@@ -78,7 +78,7 @@ class Tokenizer {
   }
 
   String removeFirstToken(
-      {required String stop, required String errorMessage}) {
+      {required String stop, required String errorMessage,}) {
     final int index = _layout.indexOf(stop);
     if (index == -1) {
       throw StateError(errorMessage);

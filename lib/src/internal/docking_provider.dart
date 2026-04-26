@@ -13,7 +13,7 @@ class DockingProvider {
       required this.maximizableItem,
       required this.maximizableTab,
       required this.maximizableTabsArea,
-      required this.antiAliasingWorkaround});
+      required this.antiAliasingWorkaround,});
 
   final DockingLayout? layout;
   final OnItemSelection? onItemSelection;

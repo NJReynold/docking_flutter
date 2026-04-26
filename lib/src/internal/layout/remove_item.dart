@@ -14,7 +14,7 @@ class RemoveItem extends LayoutModifier {
     super.validate(layout, area);
     if (area.layoutId != layout.id) {
       throw ArgumentError(
-          'DockingArea belongs to another layout. Keep the layout in the state of your StatefulWidget.');
+          'DockingArea belongs to another layout. Keep the layout in the state of your StatefulWidget.',);
     }
   }
 
@@ -30,14 +30,14 @@ class RemoveItem extends LayoutModifier {
   /// Builds a new root.
   DockingArea? _buildLayout(DockingArea area) {
     if (area is DockingItem) {
-      DockingItem dockingItem = area;
+      final DockingItem dockingItem = area;
       if (dockingItem == itemToRemove) {
         return null;
       }
       return dockingItem;
     } else if (area is DockingTabs) {
-      DockingTabs dockingTabs = area;
-      List<DockingItem> children = [];
+      final DockingTabs dockingTabs = area;
+      final List<DockingItem> children = [];
       dockingTabs.forEach((child) {
         if (child != itemToRemove) {
           children.add(child);
@@ -49,21 +49,21 @@ class RemoveItem extends LayoutModifier {
       if (children.isEmpty) {
         return null;
       }
-      DockingTabs newDockingTabs = DockingTabs(children,
+      final DockingTabs newDockingTabs = DockingTabs(children,
           id: dockingTabs.id,
           maximized: dockingTabs.maximized,
-          maximizable: dockingTabs.maximizable);
+          maximizable: dockingTabs.maximizable,);
       newDockingTabs.selectedIndex = dockingTabs.selectedIndex;
       return newDockingTabs;
     } else if (area is DockingParentArea) {
-      List<DockingArea> children = [];
+      final List<DockingArea> children = [];
       area.forEach((child) {
-        DockingArea? newChild = _buildLayout(child);
+        final DockingArea? newChild = _buildLayout(child);
         if (newChild != null) {
           children.add(newChild);
         }
       });
-      if (children.length == 0) {
+      if (children.isEmpty) {
         return null;
       } else if (children.length == 1) {
         return children.first;
@@ -74,9 +74,9 @@ class RemoveItem extends LayoutModifier {
         return DockingColumn(children, id: area.id);
       }
       throw ArgumentError(
-          'DockingArea class not recognized: ' + area.runtimeType.toString());
+          'DockingArea class not recognized: ${area.runtimeType}',);
     }
     throw ArgumentError(
-        'DockingArea class not recognized: ' + area.runtimeType.toString());
+        'DockingArea class not recognized: ${area.runtimeType}',);
   }
 }

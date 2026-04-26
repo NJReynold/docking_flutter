@@ -5,49 +5,52 @@ abstract class AreaBuilder {
 
   /// Builds a [DockingItem].
   DockingItem buildDockingItem(
-      {required dynamic id, required double? weight, required bool maximized});
+      {required dynamic id, required double? weight, required bool maximized,});
 
   /// Builds a [DockingRow].
   DockingRow buildDockingRow(
       {required dynamic id,
       required double? weight,
-      required List<DockingArea> children});
+      required List<DockingArea> children,});
 
   /// Builds a [DockingColumn].
   DockingColumn buildDockingColumn(
       {required dynamic id,
       required double? weight,
-      required List<DockingArea> children});
+      required List<DockingArea> children,});
 
   /// Builds a [DockingTabs].
   DockingTabs buildDockingTabs(
       {required dynamic id,
       required double? weight,
       required bool maximized,
-      required List<DockingItem> children});
+      required List<DockingItem> children,});
 }
 
 mixin AreaBuilderMixin implements AreaBuilder {
+  @override
   DockingRow buildDockingRow(
       {required dynamic id,
       required double? weight,
-      required List<DockingArea> children}) {
+      required List<DockingArea> children,}) {
     return DockingRow(children, id: id, weight: weight);
   }
 
+  @override
   DockingColumn buildDockingColumn(
       {required dynamic id,
       required double? weight,
-      required List<DockingArea> children}) {
+      required List<DockingArea> children,}) {
     return DockingColumn(children, id: id, weight: weight);
   }
 
   /// Builds a [DockingTabs].
+  @override
   DockingTabs buildDockingTabs(
       {required dynamic id,
       required double? weight,
       required bool maximized,
-      required List<DockingItem> children}) {
+      required List<DockingItem> children,}) {
     return DockingTabs(children, id: id, weight: weight, maximized: maximized);
   }
 }

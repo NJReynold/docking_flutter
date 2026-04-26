@@ -10,11 +10,11 @@ class DropItem extends LayoutModifier {
       {required this.dropItem,
       required this.targetArea,
       required this.dropPosition,
-      required this.dropIndex}) {
+      required this.dropIndex,}) {
     if ((dropIndex == null && dropPosition == null) ||
         (dropIndex != null && dropPosition != null)) {
       throw ArgumentError(
-          'Only one of the dropIndex and dropPosition parameters can be set.');
+          'Only one of the dropIndex and dropPosition parameters can be set.',);
     }
   }
 
@@ -27,10 +27,10 @@ class DropItem extends LayoutModifier {
   DockingArea? newLayout(DockingLayout layout) {
     if (dropItem == targetArea) {
       throw ArgumentError(
-          'Argument draggedItem cannot be the same as argument targetArea. A DockingItem cannot be rearranged on itself.');
+          'Argument draggedItem cannot be the same as argument targetArea. A DockingItem cannot be rearranged on itself.',);
     }
     validateDropItem(layout, dropItem);
-    if (!(targetArea is DockingArea)) {
+    if (targetArea is! DockingArea) {
       throw ArgumentError('Argument targetArea is not a DockingArea.');
     }
     validateTargetArea(layout, targetArea as DockingArea);
@@ -65,45 +65,45 @@ class DropItem extends LayoutModifier {
           return DockingTabs([newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else if (dropIndex == 1) {
           return DockingTabs([dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.top) {
           return DockingColumn([newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.bottom) {
           return DockingColumn([dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.left) {
           return DockingRow([newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.right) {
           return DockingRow([dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
-              minimalWeight: dockingItem.minimalWeight);
+              minimalWeight: dockingItem.minimalWeight,);
         } else {
           throw ArgumentError(
-              'DropPosition not recognized: ' + dropPosition.toString());
+              'DropPosition not recognized: $dropPosition',);
         }
       }
       return area;
     } else if (area is DockingTabs) {
       final DockingTabs dockingTabs = area;
-      List<DockingItem> children = [];
+      final List<DockingItem> children = [];
       DockingItem? oldSelection;
       int oldIndex = -1;
       for (int index = 0; index < dockingTabs.childrenCount; index++) {
-        DockingItem child = dockingTabs.childAt(index);
+        final DockingItem child = dockingTabs.childAt(index);
         if (child == targetArea) {
           throw ArgumentError('Nested tabbed panels are not allowed.');
         }
@@ -126,15 +126,15 @@ class DropItem extends LayoutModifier {
             maximizable: dockingTabs.maximizable,
             weight: dockingTabs.weight,
             minimalWeight: dockingTabs.minimalWeight,
-            minimalSize: dockingTabs.minimalSize);
+            minimalSize: dockingTabs.minimalSize,);
         if (oldSelection != null) {
-          int newSelectedIndex = children.indexOf(oldSelection);
+          final int newSelectedIndex = children.indexOf(oldSelection);
           (newArea as DockingTabs).selectedIndex =
               newSelectedIndex > -1 ? newSelectedIndex : 0;
         }
       }
       if (dockingTabs == targetArea) {
-        DockingItem newDraggedItem = dropItem;
+        final DockingItem newDraggedItem = dropItem;
         if (dropIndex != null) {
           int newIndex = dropIndex!;
           if (oldIndex > -1) {
@@ -145,15 +145,15 @@ class DropItem extends LayoutModifier {
           } else {
             children.insert(newIndex, newDraggedItem);
           }
-          DockingTabs newDockingTabs = DockingTabs(children,
+          final DockingTabs newDockingTabs = DockingTabs(children,
               id: dockingTabs.id,
               maximized: dockingTabs.maximized,
               maximizable: dockingTabs.maximizable,
               weight: dockingTabs.weight,
               minimalWeight: dockingTabs.minimalWeight,
-              minimalSize: dockingTabs.minimalSize);
+              minimalSize: dockingTabs.minimalSize,);
           if (oldSelection != null) {
-            int newSelectedIndex = children.indexOf(oldSelection);
+            final int newSelectedIndex = children.indexOf(oldSelection);
             newDockingTabs.selectedIndex =
                 newSelectedIndex > -1 ? newSelectedIndex : 0;
           }
@@ -168,19 +168,19 @@ class DropItem extends LayoutModifier {
           return DockingRow([newArea, newDraggedItem]);
         } else {
           throw ArgumentError(
-              'DropPosition not recognized: ' + dropPosition.toString());
+              'DropPosition not recognized: $dropPosition',);
         }
       }
       return newArea;
     } else if (area is DockingParentArea) {
-      List<DockingArea> children = [];
+      final List<DockingArea> children = [];
       area.forEach((child) {
-        DockingArea? newChild = _buildLayout(child);
+        final DockingArea? newChild = _buildLayout(child);
         if (newChild != null) {
           children.add(newChild);
         }
       });
-      if (children.length == 0) {
+      if (children.isEmpty) {
         return null;
       } else if (children.length == 1) {
         return children.first;
@@ -189,17 +189,17 @@ class DropItem extends LayoutModifier {
         return DockingRow(children,
             weight: area.weight,
             minimalWeight: area.minimalWeight,
-            minimalSize: area.minimalSize);
+            minimalSize: area.minimalSize,);
       } else if (area is DockingColumn) {
         return DockingColumn(children,
             weight: area.weight,
             minimalWeight: area.minimalWeight,
-            minimalSize: area.minimalSize);
+            minimalSize: area.minimalSize,);
       }
       throw StateError(
-          'DockingArea class not recognized: ' + area.runtimeType.toString());
+          'DockingArea class not recognized: ${area.runtimeType}',);
     }
     throw StateError(
-        'DockingArea class not recognized: ' + area.runtimeType.toString());
+        'DockingArea class not recognized: ${area.runtimeType}',);
   }
 }

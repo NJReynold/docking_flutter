@@ -9,7 +9,7 @@ typedef DropWidgetListener = void Function(DropPosition? dropPosition);
 
 @internal
 abstract class DropAnchorBaseWidget extends StatelessWidget {
-  const DropAnchorBaseWidget({required this.layout, required this.dropPosition, required this.listener});
+  const DropAnchorBaseWidget({required this.layout, required this.dropPosition, required this.listener, Key? key}) : super(key: key);
 
   final DockingLayout layout;
   final DropPosition dropPosition;
@@ -28,7 +28,7 @@ abstract class DropAnchorBaseWidget extends StatelessWidget {
               final TabData? draggedTabData = draggableData.data?.tab;
               final DockingItem? draggedItem = draggedTabData?.value as DockingItem?;
               if (draggedItem != null) {
-                bool willAccept = onWillAccept(draggedItem);
+                final bool willAccept = onWillAccept(draggedItem);
                 if (willAccept) {
                   listener(dropPosition);
                 } else {
@@ -43,9 +43,9 @@ abstract class DropAnchorBaseWidget extends StatelessWidget {
             onAcceptWithDetails: (DragTargetDetails<Draggable<DraggableTabData>> details) {
               final Draggable<DraggableTabData> draggableData = details.data;
               final TabData tabData = draggableData.data?.tab ?? TabData();
-              final DockingItem draggableItem = tabData.value as DockingItem;
+              final DockingItem draggableItem = tabData.value! as DockingItem;
               onAccept(draggableItem);
-            }));
+            },),);
   }
 
   bool onWillAccept(DockingItem draggedItem);
@@ -71,9 +71,9 @@ abstract class DropAnchorBaseWidget extends StatelessWidget {
 @internal
 class ItemDropAnchorWidget extends DropAnchorBaseWidget {
   const ItemDropAnchorWidget(
-      {required DockingLayout layout, required DropPosition dropPosition, required DropWidgetListener listener, required DockingItem dockingItem})
+      {required DockingLayout layout, required DropPosition dropPosition, required DropWidgetListener listener, required DockingItem dockingItem, Key? key,})
       : _dockingItem = dockingItem,
-        super(layout: layout, dropPosition: dropPosition, listener: listener);
+        super(key: key, layout: layout, dropPosition: dropPosition, listener: listener);
 
   final DockingItem _dockingItem;
 
@@ -91,9 +91,9 @@ class ItemDropAnchorWidget extends DropAnchorBaseWidget {
 @internal
 class TabsDropAnchorWidget extends DropAnchorBaseWidget {
   const TabsDropAnchorWidget(
-      {required DockingLayout layout, required DropPosition dropPosition, required DropWidgetListener listener, required DockingTabs dockingTabs})
+      {required DockingLayout layout, required DropPosition dropPosition, required DropWidgetListener listener, required DockingTabs dockingTabs, Key? key,})
       : _dockingTabs = dockingTabs,
-        super(layout: layout, dropPosition: dropPosition, listener: listener);
+        super(key: key, layout: layout, dropPosition: dropPosition, listener: listener);
 
   final DockingTabs _dockingTabs;
 

@@ -7,18 +7,18 @@ DockingItem dockingItem(String? name, {dynamic id}) {
 }
 
 void removeItemById(DockingLayout layout, List<dynamic> ids) {
-  List<DockingItem> itemsToDispose = [];
-  for (dynamic id in ids) {
-    DockingItem? item = layout.findDockingItem(id);
+  final List<DockingItem> itemsToDispose = [];
+  for (final dynamic id in ids) {
+    final DockingItem? item = layout.findDockingItem(id);
     if (item != null) {
       itemsToDispose.add(item);
     }
   }
-  List<DockingArea> areas = layout.layoutAreas();
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.removeItemByIds(ids);
-  areas.forEach((area) {
+  for (final area in areas) {
     bool areaIsDisposedItem = false;
-    for (DockingItem disposedItem in itemsToDispose) {
+    for (final DockingItem disposedItem in itemsToDispose) {
       if (area == disposedItem) {
         areaIsDisposedItem = true;
         break;
@@ -29,52 +29,52 @@ void removeItemById(DockingLayout layout, List<dynamic> ids) {
     } else {
       testDisposed(area);
     }
-  });
+  }
 }
 
 void removeItem(DockingLayout layout, DockingItem item) {
-  List<DockingArea> areas = layout.layoutAreas();
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.removeItem(item: item);
   testOldAreas(areas, disposedItem: item);
 }
 
 void moveItemToPosition(DockingLayout layout, DockingItem draggedItem,
-    DropArea targetArea, DropPosition dropPosition) {
-  List<DockingArea> areas = layout.layoutAreas();
+    DropArea targetArea, DropPosition dropPosition,) {
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.moveItem(
       draggedItem: draggedItem,
       targetArea: targetArea,
-      dropPosition: dropPosition);
+      dropPosition: dropPosition,);
   testOldAreas(areas);
 }
 
 void moveItemToIndex(DockingLayout layout, DockingItem draggedItem,
-    DropArea targetArea, int dropIndex) {
-  List<DockingArea> areas = layout.layoutAreas();
+    DropArea targetArea, int dropIndex,) {
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.moveItem(
-      draggedItem: draggedItem, targetArea: targetArea, dropIndex: dropIndex);
+      draggedItem: draggedItem, targetArea: targetArea, dropIndex: dropIndex,);
   testOldAreas(areas);
 }
 
 void addItemOnRootPosition(
-    DockingLayout layout, DockingItem newItem, DropPosition dropPosition) {
-  List<DockingArea> areas = layout.layoutAreas();
+    DockingLayout layout, DockingItem newItem, DropPosition dropPosition,) {
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.addItemOnRoot(newItem: newItem, dropPosition: dropPosition);
   testOldAreas(areas);
 }
 
 void addItemOnRootIndex(
-    DockingLayout layout, DockingItem newItem, int dropIndex) {
-  List<DockingArea> areas = layout.layoutAreas();
+    DockingLayout layout, DockingItem newItem, int dropIndex,) {
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.addItemOnRoot(newItem: newItem, dropIndex: dropIndex);
   testOldAreas(areas);
 }
 
 void addItemOn(DockingLayout layout, DockingItem newItem, DropArea targetArea,
-    DropPosition dropPosition) {
-  List<DockingArea> areas = layout.layoutAreas();
+    DropPosition dropPosition,) {
+  final List<DockingArea> areas = layout.layoutAreas();
   layout.addItemOn(
-      newItem: newItem, targetArea: targetArea, dropPosition: dropPosition);
+      newItem: newItem, targetArea: targetArea, dropPosition: dropPosition,);
   testOldAreas(areas);
 }
 
@@ -98,7 +98,7 @@ void testAreasAttributes(DockingLayout layout) {
 }
 
 void testHierarchy(DockingLayout layout, String hierarchy) {
-  if (hierarchy.length == 0) {
+  if (hierarchy.isEmpty) {
     expect(layout.root, isNull);
   } else {
     expect(layout.root, isNotNull);
@@ -113,17 +113,17 @@ void testNonDisposedArea(DockingArea area) {
 }
 
 void testOldAreas(List<DockingArea> layoutAreas, {DockingItem? disposedItem}) {
-  layoutAreas.forEach((area) {
+  for (final area in layoutAreas) {
     if (area is DockingItem && area != disposedItem) {
       testNonDisposedArea(area);
     } else {
       testDisposed(area);
     }
-  });
+  }
 }
 
 void testDockingArea(DockingArea area,
-    {int? layoutIndex, bool? hasParent, int? level, String? path}) {
+    {int? layoutIndex, bool? hasParent, int? level, String? path,}) {
   if (layoutIndex != null) {
     expect(area.index, layoutIndex, reason: 'layoutIndex');
   }
@@ -141,7 +141,7 @@ void testDockingArea(DockingArea area,
 
 void testDisposed(DockingArea area) {
   testDockingArea(area,
-      layoutIndex: -1, hasParent: false, path: area.typeAcronym, level: 0);
+      layoutIndex: -1, hasParent: false, path: area.typeAcronym, level: 0,);
 }
 
 void testDockingParentArea(DockingParentArea parent,
@@ -149,9 +149,9 @@ void testDockingParentArea(DockingParentArea parent,
     int? childrenCount,
     bool? hasParent,
     int? level,
-    String? path}) {
+    String? path,}) {
   testDockingArea(parent,
-      layoutIndex: layoutIndex, hasParent: hasParent, level: level, path: path);
+      layoutIndex: layoutIndex, hasParent: hasParent, level: level, path: path,);
   if (childrenCount != null) {
     expect(parent.childrenCount, childrenCount, reason: 'childrenCount');
   }
@@ -162,28 +162,28 @@ void testDockingItem(DockingArea item,
     String? name,
     bool? hasParent,
     int? level,
-    String? path}) {
+    String? path,}) {
   testDockingArea(item,
-      layoutIndex: layoutIndex, hasParent: hasParent, level: level, path: path);
+      layoutIndex: layoutIndex, hasParent: hasParent, level: level, path: path,);
   expect(item.type, DockingAreaType.item, reason: 'type');
-  DockingItem _item = item as DockingItem;
-  expect(_item.name, name, reason: 'name');
+  final DockingItem item0 = item as DockingItem;
+  expect(item0.name, name, reason: 'name');
 }
 
 DockingRow rootAsRow(DockingLayout layout) {
   expect(layout.root, isNotNull);
   expect(layout.root!.type, DockingAreaType.row);
-  return layout.root as DockingRow;
+  return layout.root! as DockingRow;
 }
 
 DockingColumn rootAsColumn(DockingLayout layout) {
   expect(layout.root, isNotNull);
   expect(layout.root!.type, DockingAreaType.column);
-  return layout.root as DockingColumn;
+  return layout.root! as DockingColumn;
 }
 
 DockingTabs rootAsTabs(DockingLayout layout) {
   expect(layout.root, isNotNull);
   expect(layout.root!.type, DockingAreaType.tabs);
-  return layout.root as DockingTabs;
+  return layout.root! as DockingTabs;
 }

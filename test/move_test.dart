@@ -7,43 +7,43 @@ import 'utils.dart';
 void main() {
   group('move item - exceptions', () {
     test('draggedItem == targetArea ', () {
-      DockingItem item = dockingItem('a');
-      DockingLayout layout = DockingLayout(root: item);
+      final DockingItem item = dockingItem('a');
+      final DockingLayout layout = DockingLayout(root: item);
       expect(() => moveItemToPosition(layout, item, item, DropPosition.bottom),
-          sameDraggedItemAndTargetAreaException());
+          sameDraggedItemAndTargetAreaException(),);
     });
 
     test('nested tabbed panel - 0', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingTabs tabs = DockingTabs([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, tabs]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingTabs tabs = DockingTabs([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, tabs]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       expect(
-          () => moveItemToIndex(layout, itemA, itemB, 0), throwsArgumentError);
+          () => moveItemToIndex(layout, itemA, itemB, 0), throwsArgumentError,);
     });
 
     test('nested tabbed panel - 1', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingTabs tabs = DockingTabs([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, tabs]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingTabs tabs = DockingTabs([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, tabs]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       expect(
-          () => moveItemToIndex(layout, itemA, itemB, 1), throwsArgumentError);
+          () => moveItemToIndex(layout, itemA, itemB, 1), throwsArgumentError,);
     });
   });
 
   group('move item', () {
     test('row - no change', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToPosition(layout, itemA, itemB, DropPosition.left);
 
@@ -51,10 +51,10 @@ void main() {
     });
 
     test('row - invert', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToPosition(layout, itemA, itemB, DropPosition.right);
 
@@ -62,10 +62,10 @@ void main() {
     });
 
     test('row - to column 1', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToPosition(layout, itemA, itemB, DropPosition.top);
 
@@ -73,10 +73,10 @@ void main() {
     });
 
     test('row - to column 2', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToPosition(layout, itemA, itemB, DropPosition.bottom);
 
@@ -84,10 +84,10 @@ void main() {
     });
 
     test('row - to tabs 1', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToIndex(layout, itemA, itemB, 0);
 
@@ -95,10 +95,10 @@ void main() {
     });
 
     test('row - to tabs 2', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingRow row = DockingRow([itemA, itemB]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToIndex(layout, itemA, itemB, 1);
 
@@ -106,12 +106,12 @@ void main() {
     });
 
     test('row - to tabs 3', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingTabs tabs = DockingTabs([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, tabs]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingTabs tabs = DockingTabs([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, tabs]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToIndex(layout, itemA, tabs, 0);
 
@@ -119,12 +119,12 @@ void main() {
     });
 
     test('row - to tabs 4', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingTabs tabs = DockingTabs([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, tabs]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingTabs tabs = DockingTabs([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, tabs]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToIndex(layout, itemA, tabs, 1);
 
@@ -132,12 +132,12 @@ void main() {
     });
 
     test('row - to tabs 5', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingTabs tabs = DockingTabs([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, tabs]);
-      DockingLayout layout = DockingLayout(root: row);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingTabs tabs = DockingTabs([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, tabs]);
+      final DockingLayout layout = DockingLayout(root: row);
 
       moveItemToIndex(layout, itemA, tabs, 2);
 
@@ -145,16 +145,16 @@ void main() {
     });
 
     test('complex 1 a', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs]);
-      DockingLayout layout = DockingLayout(root: column);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs]);
+      final DockingLayout layout = DockingLayout(root: column);
 
       moveItemToIndex(layout, itemA, itemC, 0);
 
@@ -162,16 +162,16 @@ void main() {
     });
 
     test('complex 1 b', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs]);
-      DockingLayout layout = DockingLayout(root: column);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs]);
+      final DockingLayout layout = DockingLayout(root: column);
 
       moveItemToIndex(layout, itemA, itemC, 1);
 
@@ -179,17 +179,17 @@ void main() {
     });
 
     test('complex 2 a', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingItem itemF = dockingItem('f');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs, itemF]);
-      DockingLayout layout = DockingLayout(root: column);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingItem itemF = dockingItem('f');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs, itemF]);
+      final DockingLayout layout = DockingLayout(root: column);
 
       moveItemToIndex(layout, itemA, itemC, 0);
 
@@ -197,17 +197,17 @@ void main() {
     });
 
     test('complex 2 b', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingItem itemF = dockingItem('f');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs, itemF]);
-      DockingLayout layout = DockingLayout(root: column);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingItem itemF = dockingItem('f');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs, itemF]);
+      final DockingLayout layout = DockingLayout(root: column);
 
       moveItemToIndex(layout, itemA, itemC, 1);
 
@@ -215,19 +215,19 @@ void main() {
     });
 
     test('complex 3 a', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingItem itemF = dockingItem('f');
-      DockingItem itemG = dockingItem('g');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs, itemF]);
-      DockingRow row2 = DockingRow([itemG, column]);
-      DockingLayout layout = DockingLayout(root: row2);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingItem itemF = dockingItem('f');
+      final DockingItem itemG = dockingItem('g');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs, itemF]);
+      final DockingRow row2 = DockingRow([itemG, column]);
+      final DockingLayout layout = DockingLayout(root: row2);
 
       moveItemToIndex(layout, itemA, itemC, 0);
 
@@ -235,19 +235,19 @@ void main() {
     });
 
     test('complex 3 b', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingItem itemF = dockingItem('f');
-      DockingItem itemG = dockingItem('g');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs, itemF]);
-      DockingRow row2 = DockingRow([itemG, column]);
-      DockingLayout layout = DockingLayout(root: row2);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingItem itemF = dockingItem('f');
+      final DockingItem itemG = dockingItem('g');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs, itemF]);
+      final DockingRow row2 = DockingRow([itemG, column]);
+      final DockingLayout layout = DockingLayout(root: row2);
 
       moveItemToIndex(layout, itemA, itemC, 1);
 
@@ -255,19 +255,19 @@ void main() {
     });
 
     test('complex 3 c', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingItem itemF = dockingItem('f');
-      DockingItem itemG = dockingItem('g');
-      DockingColumn innerColumn = DockingColumn([itemB, itemC]);
-      DockingRow row = DockingRow([itemA, innerColumn]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([row, tabs, itemF]);
-      DockingRow row2 = DockingRow([itemG, column]);
-      DockingLayout layout = DockingLayout(root: row2);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingItem itemF = dockingItem('f');
+      final DockingItem itemG = dockingItem('g');
+      final DockingColumn innerColumn = DockingColumn([itemB, itemC]);
+      final DockingRow row = DockingRow([itemA, innerColumn]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([row, tabs, itemF]);
+      final DockingRow row2 = DockingRow([itemG, column]);
+      final DockingLayout layout = DockingLayout(root: row2);
 
       moveItemToIndex(layout, itemB, tabs, 1);
 

@@ -6,13 +6,13 @@ import 'utils.dart';
 void main() {
   test('DockingItem', () {
     testDockingItem(dockingItem(null),
-        layoutIndex: -1, hasParent: false, level: 0, path: 'I');
+        layoutIndex: -1, hasParent: false, level: 0, path: 'I',);
     testDockingItem(dockingItem('a'),
-        layoutIndex: -1, name: 'a', hasParent: false, level: 0, path: 'I');
+        layoutIndex: -1, name: 'a', hasParent: false, level: 0, path: 'I',);
   });
 
   test('empty layout', () {
-    DockingLayout layout = DockingLayout();
+    final DockingLayout layout = DockingLayout();
     expect(layout.root, isNull);
   });
 

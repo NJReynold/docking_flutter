@@ -1,5 +1,5 @@
-import 'package:docking/src/layout/docking_layout.dart';
 import 'package:docking/src/internal/layout/layout_modifier.dart';
+import 'package:docking/src/layout/docking_layout.dart';
 import 'package:meta/meta.dart';
 
 /// Removes [DockingItem] by id from this layout.
@@ -20,14 +20,14 @@ class RemoveItemById extends LayoutModifier {
   /// Builds a new root.
   DockingArea? _buildLayout(DockingArea area) {
     if (area is DockingItem) {
-      DockingItem dockingItem = area;
+      final DockingItem dockingItem = area;
       if (dockingItem.id == id) {
         return null;
       }
       return dockingItem;
     } else if (area is DockingTabs) {
-      DockingTabs dockingTabs = area;
-      List<DockingItem> children = [];
+      final DockingTabs dockingTabs = area;
+      final List<DockingItem> children = [];
       dockingTabs.forEach((child) {
         if (child.id != id) {
           children.add(child);
@@ -36,21 +36,21 @@ class RemoveItemById extends LayoutModifier {
       if (children.length == 1) {
         return children.first;
       }
-      DockingTabs newDockingTabs = DockingTabs(children,
+      final DockingTabs newDockingTabs = DockingTabs(children,
           id: dockingTabs.id,
           maximized: dockingTabs.maximized,
-          maximizable: dockingTabs.maximizable);
+          maximizable: dockingTabs.maximizable,);
       newDockingTabs.selectedIndex = dockingTabs.selectedIndex;
       return newDockingTabs;
     } else if (area is DockingParentArea) {
-      List<DockingArea> children = [];
+      final List<DockingArea> children = [];
       area.forEach((child) {
-        DockingArea? newChild = _buildLayout(child);
+        final DockingArea? newChild = _buildLayout(child);
         if (newChild != null) {
           children.add(newChild);
         }
       });
-      if (children.length == 0) {
+      if (children.isEmpty) {
         return null;
       } else if (children.length == 1) {
         return children.first;
@@ -61,9 +61,9 @@ class RemoveItemById extends LayoutModifier {
         return DockingColumn(children, id: area.id);
       }
       throw ArgumentError(
-          'DockingArea class not recognized: ' + area.runtimeType.toString());
+          'DockingArea class not recognized: ${area.runtimeType}',);
     }
     throw ArgumentError(
-        'DockingArea class not recognized: ' + area.runtimeType.toString());
+        'DockingArea class not recognized: ${area.runtimeType}',);
   }
 }

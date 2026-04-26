@@ -8,36 +8,34 @@ import 'package:tabbed_view/tabbed_view.dart';
 @internal
 mixin DraggableConfigMixin {
   DraggableConfig buildDraggableConfig(
-      {required DragOverPosition dockingDrag, required TabData tabData}) {
-    DockingItem item = tabData.value as DockingItem;
-    String name = item.name != null ? item.name! : '';
+      {required DragOverPosition dockingDrag, required TabData tabData,}) {
+    final DockingItem item = tabData.value! as DockingItem;
+    final String name = item.name != null ? item.name! : '';
     return DraggableConfig(
         feedback: buildFeedback(name),
         dragAnchorStrategy: (Draggable<Object> draggable, BuildContext context,
-                Offset position) =>
-            Offset(20, 20),
+                Offset position,) =>
+            const Offset(20, 20),
         onDragStarted: () {
           dockingDrag.enable = true;
         },
         onDragCompleted: () {
           dockingDrag.enable = false;
-        });
+        },);
   }
 
   Widget buildFeedback(String name) {
     return Material(
         child: Container(
+            decoration:
+                BoxDecoration(border: Border.all(), color: Colors.grey[300]),
             child: ConstrainedBox(
-                constraints: new BoxConstraints(
-                  minHeight: 0,
+                constraints: const BoxConstraints(
                   minWidth: 30,
-                  maxHeight: double.infinity,
                   maxWidth: 150.0,
                 ),
                 child: Padding(
-                    child: Text(name, overflow: TextOverflow.ellipsis),
-                    padding: EdgeInsets.all(4))),
-            decoration:
-                BoxDecoration(border: Border.all(), color: Colors.grey[300])));
+                    padding: const EdgeInsets.all(4),
+                    child: Text(name, overflow: TextOverflow.ellipsis),),),),);
   }
 }

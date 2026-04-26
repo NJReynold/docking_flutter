@@ -46,7 +46,7 @@ class LayoutStringify {
   /// Example:
   /// V1:3:1(R;0;;;2,3),2(I;6;my_id1;0.5;F),3(I;6;my_id2;0.5;F)
   static String stringify(
-      {required LayoutParser parser, required List<DockingArea> areas}) {
+      {required LayoutParser parser, required List<DockingArea> areas,}) {
     String str = 'V1:${areas.length}:';
     for (int i = 0; i < areas.length; i++) {
       if (i > 0) {
@@ -55,7 +55,7 @@ class LayoutStringify {
       final DockingArea area = areas[i];
       str += '${area.index}(';
       str += '${area.areaAcronym};';
-      str += '${stringifyArea(parser: parser, area: area)}';
+      str += stringifyArea(parser: parser, area: area);
 
       if (area is DockingItem) {
         str += ';';
@@ -83,8 +83,8 @@ class LayoutStringify {
   ///
   /// Example: 3;id1;.2
   static String stringifyArea(
-      {required LayoutParser parser, required DockingArea area}) {
-    List<String> data = [];
+      {required LayoutParser parser, required DockingArea area,}) {
+    final List<String> data = [];
     // ID_LENGTH and ID
     final String id = parser.idToString(area.id);
     data.add(id.length.toString());
@@ -123,7 +123,7 @@ class LayoutStringify {
   /// Example:
   /// 4,5,6
   static String stringifyParent({required DockingParentArea parent}) {
-    List<String> indexes = [];
+    final List<String> indexes = [];
     for (int i = 0; i < parent.childrenCount; i++) {
       final DockingArea child = parent.childAt(i);
       if (child.index == -1) {

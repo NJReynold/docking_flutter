@@ -4,16 +4,16 @@ import 'package:meta/meta.dart';
 
 @internal
 class DropFeedbackWidget extends StatelessWidget {
+
+  const DropFeedbackWidget({required this.child, Key? key, this.dropPosition})
+      : super(key: key);
   final Widget child;
   final DropPosition? dropPosition;
-
-  const DropFeedbackWidget({Key? key, this.dropPosition, required this.child})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-        foregroundPainter: _CustomPainter(dropPosition), child: child);
+        foregroundPainter: _CustomPainter(dropPosition), child: child,);
   }
 }
 
@@ -25,7 +25,7 @@ class _CustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (dropPosition != null) {
-      Paint paint = Paint()
+      final Paint paint = Paint()
         ..color = Colors.black.withValues(alpha: .5)
         ..style = PaintingStyle.fill;
       late Rect rect;

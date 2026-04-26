@@ -7,10 +7,7 @@ import 'package:meta/meta.dart';
 @internal
 abstract class ContentWrapperBase extends StatelessWidget {
   const ContentWrapperBase(
-      {Key? key,
-      required this.layout,
-      required this.listener,
-      required this.child})
+      {required this.layout, required this.listener, required this.child, Key? key,})
       : super(key: key);
 
   final DockingLayout layout;
@@ -22,7 +19,7 @@ abstract class ContentWrapperBase extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      List<Widget> children = [Positioned.fill(child: child)];
+      final List<Widget> children = [Positioned.fill(child: child)];
 
       // percentage of width reserved for detecting center area
       const double centerWidthRatio = 50;
@@ -35,35 +32,35 @@ abstract class ContentWrapperBase extends StatelessWidget {
       final double verticalEdgeHeight = constraints.maxHeight / 2;
 
       children.add(Positioned(
-          child: buildDropAnchor(DropPosition.left),
           width: horizontalEdgeWidth,
           bottom: 0,
           top: 0,
-          left: 0));
+          left: 0,
+          child: buildDropAnchor(DropPosition.left),),);
 
       children.add(Positioned(
-          child: buildDropAnchor(DropPosition.right),
           width: horizontalEdgeWidth,
           bottom: 0,
           top: 0,
-          right: 0));
+          right: 0,
+          child: buildDropAnchor(DropPosition.right),),);
 
       children.add(Positioned(
-          child: buildDropAnchor(DropPosition.top),
           height: verticalEdgeHeight,
           top: 0,
           left: horizontalEdgeWidth,
-          right: horizontalEdgeWidth));
+          right: horizontalEdgeWidth,
+          child: buildDropAnchor(DropPosition.top),),);
 
       children.add(Positioned(
-          child: buildDropAnchor(DropPosition.bottom),
           height: verticalEdgeHeight,
           bottom: 0,
           left: horizontalEdgeWidth,
-          right: horizontalEdgeWidth));
+          right: horizontalEdgeWidth,
+          child: buildDropAnchor(DropPosition.bottom),),);
 
       return Stack(children: children);
-    });
+    },);
   }
 
   DropAnchorBaseWidget buildDropAnchor(DropPosition dropPosition);
@@ -71,13 +68,10 @@ abstract class ContentWrapperBase extends StatelessWidget {
 
 @internal
 class ItemContentWrapper extends ContentWrapperBase {
-  ItemContentWrapper(
-      {required DockingLayout layout,
-      required DropWidgetListener listener,
-      required DockingItem dockingItem,
-      required Widget child})
+  const ItemContentWrapper(
+      {required DockingLayout layout, required DropWidgetListener listener, required DockingItem dockingItem, required Widget child, Key? key,})
       : _dockingItem = dockingItem,
-        super(layout: layout, listener: listener, child: child);
+        super(key: key, layout: layout, listener: listener, child: child);
 
   final DockingItem _dockingItem;
 
@@ -87,19 +81,16 @@ class ItemContentWrapper extends ContentWrapperBase {
         layout: layout,
         listener: listener,
         dropPosition: dropPosition,
-        dockingItem: _dockingItem);
+        dockingItem: _dockingItem,);
   }
 }
 
 @internal
 class TabsContentWrapper extends ContentWrapperBase {
-  TabsContentWrapper(
-      {required DockingLayout layout,
-      required DropWidgetListener listener,
-      required DockingTabs dockingTabs,
-      required Widget child})
+  const TabsContentWrapper(
+      {required DockingLayout layout, required DropWidgetListener listener, required DockingTabs dockingTabs, required Widget child, Key? key,})
       : _dockingTabs = dockingTabs,
-        super(layout: layout, listener: listener, child: child);
+        super(key: key, layout: layout, listener: listener, child: child);
 
   final DockingTabs _dockingTabs;
 
@@ -109,6 +100,6 @@ class TabsContentWrapper extends ContentWrapperBase {
         layout: layout,
         listener: listener,
         dropPosition: dropPosition,
-        dockingTabs: _dockingTabs);
+        dockingTabs: _dockingTabs,);
   }
 }

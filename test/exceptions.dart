@@ -4,16 +4,16 @@ Matcher sameDraggedItemAndTargetAreaException() {
   return throwsA(predicate((x) =>
       x is ArgumentError &&
       x.message ==
-          "Argument draggedItem cannot be the same as argument targetArea. A DockingItem cannot be rearranged on itself."));
+          'Argument draggedItem cannot be the same as argument targetArea. A DockingItem cannot be rearranged on itself.',),);
 }
 
 Matcher dockingAreaInSomeLayoutException() {
   return throwsA(predicate((x) =>
       x is ArgumentError &&
-      x.message == "DockingArea already belongs to some layout."));
+      x.message == 'DockingArea already belongs to some layout.',),);
 }
 
 Matcher childNotBelongAnyLayoutException() {
   return throwsA(predicate((x) =>
-      x is StateError && x.message == "Child does not belong to any layout."));
+      x is StateError && x.message == 'Child does not belong to any layout.',),);
 }

@@ -6,15 +6,15 @@ import 'utils.dart';
 void main() {
   group('Layout indexes', () {
     test('Indexes', () {
-      DockingItem itemA = dockingItem('a');
-      DockingItem itemB = dockingItem('b');
-      DockingItem itemC = dockingItem('c');
-      DockingItem itemD = dockingItem('d');
-      DockingItem itemE = dockingItem('e');
-      DockingRow row = DockingRow([itemB, itemC]);
-      DockingTabs tabs = DockingTabs([itemD, itemE]);
-      DockingColumn column = DockingColumn([itemA, row, tabs]);
-      DockingLayout layout = DockingLayout(root: column);
+      final DockingItem itemA = dockingItem('a');
+      final DockingItem itemB = dockingItem('b');
+      final DockingItem itemC = dockingItem('c');
+      final DockingItem itemD = dockingItem('d');
+      final DockingItem itemE = dockingItem('e');
+      final DockingRow row = DockingRow([itemB, itemC]);
+      final DockingTabs tabs = DockingTabs([itemD, itemE]);
+      final DockingColumn column = DockingColumn([itemA, row, tabs]);
+      final DockingLayout layout = DockingLayout(root: column);
       expect(column.index, 1);
       expect(itemA.index, 2);
       expect(row.index, 3);

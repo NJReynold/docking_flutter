@@ -1,3 +1,5 @@
+import 'package:docking/docking.dart' show Docking;
+import 'package:docking/src/docking.dart' show Docking;
 import 'package:docking/src/docking_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:tabbed_view/tabbed_view.dart';
@@ -6,12 +8,8 @@ import 'package:tabbed_view/tabbed_view.dart';
 /// Defines the configuration of the overall visual [Theme] for a widget subtree within the app.
 class DockingThemeData {
   DockingThemeData({IconProvider? restoreIcon, IconProvider? maximizeIcon})
-      : this.restoreIcon = restoreIcon != null
-            ? restoreIcon
-            : IconProvider.path(DockingIcons.restore),
-        this.maximizeIcon = maximizeIcon != null
-            ? maximizeIcon
-            : IconProvider.data(Icons.web_asset_sharp);
+      : restoreIcon = restoreIcon ?? IconProvider.path(DockingIcons.restore),
+        maximizeIcon = maximizeIcon ?? IconProvider.data(Icons.web_asset_sharp);
 
   /// Icon for the restore button.
   IconProvider restoreIcon;

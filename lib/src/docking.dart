@@ -95,9 +95,9 @@ class _DockingState extends State<Docking> {
   Widget build(BuildContext context) {
     if (widget.layout != null) {
       if (widget.layout!.maximizedArea != null) {
-        List<DockingArea> areas = widget.layout!.layoutAreas();
-        List<Widget> children = [];
-        for (DockingArea area in areas) {
+        final List<DockingArea> areas = widget.layout!.layoutAreas();
+        final List<Widget> children = [];
+        for (final DockingArea area in areas) {
           if (area != widget.layout!.maximizedArea!) {
             if (area is DockingItem && area.globalKey != null && area.parent != widget.layout?.maximizedArea) {
               // keeping alive other areas
@@ -128,7 +128,7 @@ class _DockingState extends State<Docking> {
           itemCloseInterceptor: widget.itemCloseInterceptor,
           onItemClose: widget.onItemClose,
           dockingButtonsBuilder: widget.dockingButtonsBuilder,
-          maximizable: widget.maximizableItem);
+          maximizable: widget.maximizableItem,);
     } else if (area is DockingRow) {
       return _row(context, area);
     } else if (area is DockingColumn) {
@@ -146,7 +146,7 @@ class _DockingState extends State<Docking> {
             itemCloseInterceptor: widget.itemCloseInterceptor,
             onItemClose: widget.onItemClose,
             dockingButtonsBuilder: widget.dockingButtonsBuilder,
-            maximizable: widget.maximizableItem);
+            maximizable: widget.maximizableItem,);
       }
       return DockingTabsWidget(
           key: area.key,
@@ -159,13 +159,13 @@ class _DockingState extends State<Docking> {
           itemCloseInterceptor: widget.itemCloseInterceptor,
           dockingButtonsBuilder: widget.dockingButtonsBuilder,
           maximizableTab: widget.maximizableTab,
-          maximizableTabsArea: widget.maximizableTabsArea);
+          maximizableTabsArea: widget.maximizableTabsArea,);
     }
-    throw UnimplementedError('Unrecognized runtimeType: ' + area.runtimeType.toString());
+    throw UnimplementedError('Unrecognized runtimeType: ${area.runtimeType}');
   }
 
   Widget _row(BuildContext context, DockingRow row) {
-    List<Widget> children = [];
+    final List<Widget> children = [];
     row.forEach((child) {
       children.add(_buildArea(context, child));
     });
@@ -176,19 +176,17 @@ class _DockingState extends State<Docking> {
 
     return MultiSplitView(
         key: row.key,
-        //children: children,
-        axis: Axis.horizontal,
         controller: row.controller,
         antiAliasingWorkaround: widget.antiAliasingWorkaround,
         onDividerTap: widget.onDividerTap,
         onDividerDoubleTap: widget.onDividerDoubleTap,
         onDividerDragStart: widget.onDividerDragStart,
         onDividerDragUpdate: widget.onDividerDragUpdate,
-        onDividerDragEnd: widget.onDividerDragEnd);
+        onDividerDragEnd: widget.onDividerDragEnd,);
   }
 
   Widget _column(BuildContext context, DockingColumn column) {
-    List<Widget> children = [];
+    final List<Widget> children = [];
     column.forEach((child) {
       children.add(_buildArea(context, child));
     });
@@ -203,7 +201,7 @@ class _DockingState extends State<Docking> {
         onDividerDoubleTap: widget.onDividerDoubleTap,
         onDividerDragStart: widget.onDividerDragStart,
         onDividerDragUpdate: widget.onDividerDragUpdate,
-        onDividerDragEnd: widget.onDividerDragEnd);
+        onDividerDragEnd: widget.onDividerDragEnd,);
   }
 
   void _forceRebuild() {

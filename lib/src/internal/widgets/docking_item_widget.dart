@@ -1,12 +1,10 @@
 import 'package:docking/src/docking_buttons_builder.dart';
 import 'package:docking/src/drag_over_position.dart';
 import 'package:docking/src/internal/widgets/draggable_config_mixin.dart';
-import 'package:docking/src/internal/widgets/drop/content_wrapper.dart';
 import 'package:docking/src/internal/widgets/drop/drop_feedback_widget.dart';
 import 'package:docking/src/layout/docking_layout.dart';
 import 'package:docking/src/layout/drop_position.dart';
 import 'package:docking/src/on_item_close.dart';
-import 'package:docking/src/on_item_selection.dart';
 import 'package:docking/src/theme/docking_theme.dart';
 import 'package:docking/src/theme/docking_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +15,12 @@ import 'package:tabbed_view/tabbed_view.dart';
 /// Represents a widget for [DockingItem].
 @internal
 class DockingItemWidget extends StatefulWidget {
-  DockingItemWidget({
-    Key? key,
-    required this.layout,
-    required this.dragOverPosition,
-    required this.item,
+  const DockingItemWidget({
+    required this.layout, required this.dragOverPosition, required this.item, required this.maximizable, required this.draggable, Key? key,
     //this.onItemSelection,
     this.tabbedViewController,
     this.onItemClose,
     this.itemCloseInterceptor,
-    required this.maximizable,
-    required this.draggable,
     this.viewBuilder,
     this.onBeforeDropAccept,
     this.onDraggableBuild,
@@ -80,10 +73,10 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
 
   @override
   Widget build(BuildContext context) {
-    String name = widget.item.name != null ? widget.item.name! : '';
+    final String name = widget.item.name != null ? widget.item.name! : '';
     Widget content = widget.item.builder!(context, widget.item);
     if (widget.item.globalKey != null) {
-      content = KeyedSubtree(child: content, key: widget.item.globalKey);
+      content = KeyedSubtree(key: widget.item.globalKey, child: content);
     }
     List<TabButton>? buttons;
     if (widget.item.buttons != null && widget.item.buttons!.isNotEmpty) {
@@ -92,10 +85,8 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
     }
     final bool maximizable = widget.item.maximizable != null ? widget.item.maximizable! : widget.maximizable;
     if (maximizable) {
-      if (buttons == null) {
-        buttons = [];
-      }
-      DockingThemeData data = DockingTheme.of(context);
+      buttons ??= [];
+      final DockingThemeData data = DockingTheme.of(context);
 
       if (widget.layout.maximizedArea != null && widget.layout.maximizedArea == widget.item) {
         buttons.add(TabButton(icon: data.restoreIcon, onPressed: () => widget.layout.restore()));
@@ -104,7 +95,7 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
       }
     }
 
-    List<TabData> tabs = [
+    final List<TabData> tabs = [
       TabData(
           value: widget.item,
           text: name,
@@ -112,9 +103,9 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
           closable: widget.item.closable,
           leading: widget.item.leading,
           buttonsBuilder: (context) => buttons ?? [],
-          draggable: widget.draggable)
+          draggable: widget.draggable,),
     ];
-    TabbedViewController controller = widget.tabbedViewController ?? TabbedViewController(tabs);
+    final TabbedViewController controller = widget.tabbedViewController ?? TabbedViewController(tabs);
 
     /* OnTabSelection? onTabSelection;
     if (widget.onItemSelection != null) {
@@ -143,7 +134,7 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
             dockingItem: widget.item,
             child: controller.tabs[tabIndex].content!),
         onBeforeDropAccept: widget.draggable ? _onBeforeDropAccept : null); */
-    Widget tabbedView = TabbedView(
+    final Widget tabbedView = TabbedView(
         controller: controller,
         viewBuilder: widget.viewBuilder ?? _viewBuilder,
         //onTabSelection: onTabSelection,
@@ -167,7 +158,7 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
         canDrop: widget.canDrop,
         dragScope: widget.dragScope,
         tabRemoveInterceptor: widget.tabRemoveInterceptor,
-        trailing: widget.trailing);
+        trailing: widget.trailing,);
     if (widget.draggable && widget.dragOverPosition.enable) {
       return DropFeedbackWidget(dropPosition: _activeDropPosition, child: tabbedView);
     }
@@ -175,11 +166,11 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
   }
 
   Widget _viewBuilder(BuildContext context, TabData tab) {
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 
   bool _onBeforeDropAccept(DraggableTabData source, int newIndex) {
-    DockingItem dockingItem = source.tab.value as DockingItem;
+    final DockingItem dockingItem = source.tab.value! as DockingItem;
     if (dockingItem != widget.item) {
       widget.layout.moveItem(draggedItem: dockingItem, targetArea: widget.item, dropIndex: newIndex);
     }

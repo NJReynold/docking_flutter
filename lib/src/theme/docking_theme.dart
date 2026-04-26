@@ -1,3 +1,5 @@
+import 'package:docking/docking.dart' show Docking;
+import 'package:docking/src/docking.dart' show Docking;
 import 'package:docking/src/theme/docking_theme_data.dart';
 import 'package:flutter/widgets.dart';
 
@@ -10,9 +12,7 @@ class DockingTheme extends StatelessWidget {
   ///
   /// The [data] and [child] arguments must not be null.
   const DockingTheme({
-    Key? key,
-    required this.child,
-    required this.data,
+    required this.child, required this.data, Key? key,
   }) : super(key: key);
 
   /// Specifies the theme for descendant widgets.
@@ -40,9 +40,7 @@ class DockingTheme extends StatelessWidget {
 
 class _InheritedTheme extends InheritedWidget {
   const _InheritedTheme({
-    Key? key,
-    required this.data,
-    required Widget child,
+    required this.data, required Widget child, Key? key,
   }) : super(key: key, child: child);
 
   final DockingThemeData data;
