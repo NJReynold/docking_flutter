@@ -16,7 +16,7 @@ void main() {
     test('area.layoutId != -1', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: row);
       expect(() => addItemOn(layout, itemB, itemA, DropPosition.right),
           dockingAreaInSomeLayoutException(),);
@@ -69,7 +69,7 @@ void main() {
     test('item on row - right', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: row);
       addItemOn(layout, dockingItem('c'), itemA, DropPosition.right);
       testHierarchy(layout, 'R(Ia,Ic,Ib)');

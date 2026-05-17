@@ -32,7 +32,7 @@ void main() {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
-      final DockingRow row = DockingRow([itemA, itemB, itemC]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB, itemC]);
       final DockingLayout layout = DockingLayout(root: row);
 
       testHierarchy(layout, 'R(Ia,Ib,Ic)');
@@ -45,7 +45,7 @@ void main() {
     test('row item 2', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: row);
 
       testHierarchy(layout, 'R(Ia,Ib)');
@@ -59,7 +59,7 @@ void main() {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
-      final DockingColumn column = DockingColumn([itemA, itemB, itemC]);
+      final DockingColumn column = DockingColumn(<DockingArea>[itemA, itemB, itemC]);
       final DockingLayout layout = DockingLayout(root: column);
 
       testHierarchy(layout, 'C(Ia,Ib,Ic)');
@@ -72,7 +72,7 @@ void main() {
     test('column item 2', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingColumn column = DockingColumn([itemA, itemB]);
+      final DockingColumn column = DockingColumn(<DockingArea>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: column);
 
       testHierarchy(layout, 'C(Ia,Ib)');
@@ -84,7 +84,7 @@ void main() {
 
     test('tabs single item', () {
       final DockingItem itemA = dockingItem('a');
-      final DockingTabs tabs = DockingTabs([itemA]);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemA]);
       final DockingLayout layout = DockingLayout(root: tabs);
 
       testHierarchy(layout, 'T(Ia)');
@@ -98,7 +98,7 @@ void main() {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
-      final DockingTabs tabs = DockingTabs([itemA, itemB, itemC]);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemA, itemB, itemC]);
       final DockingLayout layout = DockingLayout(root: tabs);
 
       testHierarchy(layout, 'T(Ia,Ib,Ic)');
@@ -111,7 +111,7 @@ void main() {
     test('tabs item 2', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingTabs tabs = DockingTabs([itemA, itemB]);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: tabs);
 
       testHierarchy(layout, 'T(Ia,Ib)');
@@ -125,8 +125,8 @@ void main() {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
-      final DockingRow row = DockingRow([itemA, itemB]);
-      final DockingColumn column = DockingColumn([row, itemC]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
+      final DockingColumn column = DockingColumn(<DockingArea>[row, itemC]);
       final DockingLayout layout = DockingLayout(root: column);
 
       testHierarchy(layout, 'C(R(Ia,Ib),Ic)');
@@ -140,8 +140,8 @@ void main() {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
-      final DockingRow row = DockingRow([itemA, itemB]);
-      final DockingColumn column = DockingColumn([row, itemC]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
+      final DockingColumn column = DockingColumn(<DockingArea>[row, itemC]);
       final DockingLayout layout = DockingLayout(root: column);
 
       testHierarchy(layout, 'C(R(Ia,Ib),Ic)');
@@ -156,9 +156,9 @@ void main() {
       final DockingItem itemB = dockingItem('b');
       final DockingItem itemC = dockingItem('c');
       final DockingItem itemD = dockingItem('d');
-      final DockingRow row = DockingRow([itemB, itemC]);
-      final DockingColumn column = DockingColumn([row, itemD]);
-      final DockingRow rootRow = DockingRow([itemA, column]);
+      final DockingRow row = DockingRow(<DockingArea>[itemB, itemC]);
+      final DockingColumn column = DockingColumn(<DockingArea>[row, itemD]);
+      final DockingRow rootRow = DockingRow(<DockingArea>[itemA, column]);
       final DockingLayout layout = DockingLayout(root: rootRow);
 
       testHierarchy(layout, 'R(Ia,C(R(Ib,Ic),Id))');

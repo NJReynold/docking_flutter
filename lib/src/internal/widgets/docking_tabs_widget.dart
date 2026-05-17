@@ -73,20 +73,20 @@ class DockingTabsWidgetState extends State<DockingTabsWidget> with DraggableConf
 
   @override
   Widget build(BuildContext context) {
-    final List<TabData> tabs = [];
-    widget.dockingTabs.forEach((child) {
+    final List<TabData> tabs = <TabData>[];
+    widget.dockingTabs.forEach((DockingItem child) {
       Widget content = child.builder!(context, child);
       if (child.globalKey != null) {
         content = KeyedSubtree(key: child.globalKey, child: content);
       }
       List<TabButton>? buttons;
       if (child.buttons != null && child.buttons!.isNotEmpty) {
-        buttons = [];
+        buttons = <TabButton>[];
         buttons.addAll(child.buttons!);
       }
       final bool maximizable = child.maximizable != null ? child.maximizable! : widget.maximizableTab;
       if (maximizable) {
-        buttons ??= [];
+        buttons ??= <TabButton>[];
         final DockingThemeData data = DockingTheme.of(context);
         if (widget.layout.maximizedArea != null && widget.layout.maximizedArea == child) {
           buttons.add(TabButton(icon: data.restoreIcon, onPressed: () => widget.layout.restore()));
@@ -101,7 +101,7 @@ class DockingTabsWidgetState extends State<DockingTabsWidget> with DraggableConf
           closable: child.closable,
           keepAlive: child.globalKey != null,
           leading: child.leading,
-          buttonsBuilder: (context) => buttons ?? [],
+          buttonsBuilder: (BuildContext context) => buttons ?? <TabButton>[],
           draggable: widget.draggable,),);
     });
     final TabbedViewController controller = TabbedViewController(tabs);
@@ -185,7 +185,7 @@ class DockingTabsWidgetState extends State<DockingTabsWidget> with DraggableConf
   }
 
   List<TabButton> _tabsAreaButtonsBuilder(BuildContext context, int tabsCount) {
-    final List<TabButton> buttons = [];
+    final List<TabButton> buttons = <TabButton>[];
     if (widget.dockingButtonsBuilder != null) {
       buttons.addAll(widget.dockingButtonsBuilder!(context, widget.dockingTabs, null));
     }

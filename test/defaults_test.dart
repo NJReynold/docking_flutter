@@ -15,7 +15,7 @@ void main() {
     test('row', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
       final DockingLayout layout = DockingLayout(root: row);
       expect(layout.root, row);
       testDockingParentArea(row,
@@ -31,7 +31,7 @@ void main() {
     test('column', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingLayout layout = DockingLayout(root: DockingColumn([itemA, itemB]));
+      final DockingLayout layout = DockingLayout(root: DockingColumn(<DockingArea>[itemA, itemB]));
       final DockingColumn column = rootAsColumn(layout);
       expect(column.childrenCount, 2);
       testDockingItem(column.childAt(0),

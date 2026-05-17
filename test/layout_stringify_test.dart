@@ -16,9 +16,9 @@ void main() {
       final DockingItem itemC = dockingItem('c');
       final DockingItem itemD = dockingItem('d');
       final DockingItem itemE = dockingItem('e');
-      final DockingRow row = DockingRow([itemB, itemC]);
-      final DockingTabs tabs = DockingTabs([itemD, itemE]);
-      final DockingColumn column = DockingColumn([itemA, row, tabs]);
+      final DockingRow row = DockingRow(<DockingArea>[itemB, itemC]);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemD, itemE]);
+      final DockingColumn column = DockingColumn(<DockingArea>[itemA, row, tabs]);
 
       expect(() => LayoutStringify.stringifyParent(parent: column), childNotBelongAnyLayoutException());
       expect(() => LayoutStringify.stringifyParent(parent: row), childNotBelongAnyLayoutException());
@@ -36,9 +36,9 @@ void main() {
       final DockingItem itemC = DockingItem(id: 'idC', widget: Container());
       final DockingItem itemD = DockingItem(id: 1.2, widget: Container());
       final DockingItem itemE = DockingItem(widget: Container(), weight: .3);
-      final DockingRow row = DockingRow([itemB, itemC], weight: .4);
-      final DockingTabs tabs = DockingTabs([itemD, itemE]);
-      final DockingColumn column = DockingColumn([itemA, row, tabs]);
+      final DockingRow row = DockingRow(<DockingArea>[itemB, itemC], weight: .4);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemD, itemE]);
+      final DockingColumn column = DockingColumn(<DockingArea>[itemA, row, tabs]);
 
       DockingLayout(root: column);
 
@@ -54,7 +54,7 @@ void main() {
     test('stringifyTabs', () {
       final DockingItem itemA = dockingItem('a');
       final DockingItem itemB = dockingItem('b');
-      final DockingTabs tabs = DockingTabs([itemA, itemB], maximized: true);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemA, itemB], maximized: true);
 
       DockingLayout(root: tabs);
 
@@ -63,7 +63,7 @@ void main() {
     test('stringifyItem', () {
       final DockingItem itemA = DockingItem(widget: Container());
       final DockingItem itemB = DockingItem(maximized: true, widget: Container());
-      final DockingRow row = DockingRow([itemA, itemB]);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB]);
 
       DockingLayout(root: row);
 
@@ -73,7 +73,7 @@ void main() {
     test('stringifyArea - CustomIdParser', () {
       final DockingItem itemA = DockingItem(id: 1.2, widget: Container());
       final DockingItem itemB = DockingItem(id: 3.3, widget: Container());
-      final DockingRow row = DockingRow([itemA, itemB], id: 5.5);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB], id: 5.5);
 
       DockingLayout(root: row);
 
@@ -86,7 +86,7 @@ void main() {
     test('stringifyArea - CustomIdClassParser', () {
       final DockingItem itemA = DockingItem(id: CustomClass('itemA'), widget: Container());
       final DockingItem itemB = DockingItem(id: CustomClass('itemB'), widget: Container());
-      final DockingRow row = DockingRow([itemA, itemB], id: CustomClass('row'));
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB], id: CustomClass('row'));
 
       DockingLayout(root: row);
 
@@ -100,7 +100,7 @@ void main() {
       final DockingItem itemA = DockingItem(id: 'idA', value: 'valueA', widget: Container());
       final DockingItem itemB = DockingItem(id: 'idB', value: 'valueB', widget: Container());
 
-      final DockingRow row = DockingRow([itemA, itemB], weight: 1);
+      final DockingRow row = DockingRow(<DockingArea>[itemA, itemB], weight: 1);
 
       final DockingLayout layout = DockingLayout(root: row);
 

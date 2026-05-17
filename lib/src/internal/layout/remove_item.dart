@@ -37,8 +37,8 @@ class RemoveItem extends LayoutModifier {
       return dockingItem;
     } else if (area is DockingTabs) {
       final DockingTabs dockingTabs = area;
-      final List<DockingItem> children = [];
-      dockingTabs.forEach((child) {
+      final List<DockingItem> children = <DockingItem>[];
+      dockingTabs.forEach((DockingItem child) {
         if (child != itemToRemove) {
           children.add(child);
         }
@@ -56,8 +56,8 @@ class RemoveItem extends LayoutModifier {
       newDockingTabs.selectedIndex = dockingTabs.selectedIndex;
       return newDockingTabs;
     } else if (area is DockingParentArea) {
-      final List<DockingArea> children = [];
-      area.forEach((child) {
+      final List<DockingArea> children = <DockingArea>[];
+      area.forEach((DockingArea child) {
         final DockingArea? newChild = _buildLayout(child);
         if (newChild != null) {
           children.add(newChild);

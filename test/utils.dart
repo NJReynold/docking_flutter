@@ -7,7 +7,7 @@ DockingItem dockingItem(String? name, {dynamic id}) {
 }
 
 void removeItemById(DockingLayout layout, List<dynamic> ids) {
-  final List<DockingItem> itemsToDispose = [];
+  final List<DockingItem> itemsToDispose = <DockingItem>[];
   for (final dynamic id in ids) {
     final DockingItem? item = layout.findDockingItem(id);
     if (item != null) {
@@ -16,7 +16,7 @@ void removeItemById(DockingLayout layout, List<dynamic> ids) {
   }
   final List<DockingArea> areas = layout.layoutAreas();
   layout.removeItemByIds(ids);
-  for (final area in areas) {
+  for (final DockingArea area in areas) {
     bool areaIsDisposedItem = false;
     for (final DockingItem disposedItem in itemsToDispose) {
       if (area == disposedItem) {
@@ -84,7 +84,7 @@ int _testAreasAttributes(DockingArea parent, bool value, int level, int index) {
   expect(parent.index, index);
   index++;
   if (parent is DockingParentArea) {
-    parent.forEach((child) {
+    parent.forEach((DockingArea child) {
       index = _testAreasAttributes(child, true, level + 1, index);
     });
   }
@@ -113,7 +113,7 @@ void testNonDisposedArea(DockingArea area) {
 }
 
 void testOldAreas(List<DockingArea> layoutAreas, {DockingItem? disposedItem}) {
-  for (final area in layoutAreas) {
+  for (final DockingArea area in layoutAreas) {
     if (area is DockingItem && area != disposedItem) {
       testNonDisposedArea(area);
     } else {

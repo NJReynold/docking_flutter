@@ -80,12 +80,12 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
     }
     List<TabButton>? buttons;
     if (widget.item.buttons != null && widget.item.buttons!.isNotEmpty) {
-      buttons = [];
+      buttons = <TabButton>[];
       buttons.addAll(widget.item.buttons!);
     }
     final bool maximizable = widget.item.maximizable != null ? widget.item.maximizable! : widget.maximizable;
     if (maximizable) {
-      buttons ??= [];
+      buttons ??= <TabButton>[];
       final DockingThemeData data = DockingTheme.of(context);
 
       if (widget.layout.maximizedArea != null && widget.layout.maximizedArea == widget.item) {
@@ -95,14 +95,14 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
       }
     }
 
-    final List<TabData> tabs = [
+    final List<TabData> tabs = <TabData>[
       TabData(
           value: widget.item,
           text: name,
           view: content,
           closable: widget.item.closable,
           leading: widget.item.leading,
-          buttonsBuilder: (context) => buttons ?? [],
+          buttonsBuilder: (BuildContext context) => buttons ?? <TabButton>[],
           draggable: widget.draggable,),
     ];
     final TabbedViewController controller = widget.tabbedViewController ?? TabbedViewController(tabs);
@@ -193,7 +193,7 @@ class DockingItemWidgetState extends State<DockingItemWidget> with DraggableConf
     if (widget.dockingButtonsBuilder != null) {
       return widget.dockingButtonsBuilder!(context, null, widget.item);
     }
-    return [];
+    return <TabButton>[];
   }
 
   bool _tabCloseInterceptor(int tabIndex) {

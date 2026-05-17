@@ -18,17 +18,17 @@ void main() {
 
   group('not allowed', () {
     test('column children count', () {
-      expect(() => DockingColumn([dockingItem('a')]), throwsArgumentError);
-      expect(() => DockingColumn([]), throwsArgumentError);
+      expect(() => DockingColumn(<DockingArea>[dockingItem('a')]), throwsArgumentError);
+      expect(() => DockingColumn(<DockingArea>[]), throwsArgumentError);
     });
 
     test('row children count', () {
-      expect(() => DockingRow([dockingItem('a')]), throwsArgumentError);
-      expect(() => DockingRow([]), throwsArgumentError);
+      expect(() => DockingRow(<DockingArea>[dockingItem('a')]), throwsArgumentError);
+      expect(() => DockingRow(<DockingArea>[]), throwsArgumentError);
     });
 
     test('tabs children count', () {
-      expect(() => DockingTabs([]), throwsArgumentError);
+      expect(() => DockingTabs(<DockingItem>[]), throwsArgumentError);
     });
   });
 }

@@ -18,7 +18,7 @@ class LayoutFactory {
           stop: ':',
           errorMessage: 'The number of areas could not be identified.',);
 
-      final Map<int, _AreaConfig> areas = {};
+      final Map<int, _AreaConfig> areas = <int, _AreaConfig>{};
 
       for (int areaIndex = 1; areaIndex <= areasLength; areaIndex++) {
         final int indexFromLayout = tokenizer.removeFirstRequiredInt(
@@ -106,7 +106,7 @@ class LayoutFactory {
           weight: parent.weight,
           maximized: parent.maximized,);
     } else if (parent is _ParentConfig) {
-      final List<DockingArea> children = [];
+      final List<DockingArea> children = <DockingArea>[];
       for (final int childIndex in parent.childrenIndexes) {
         final _AreaConfig childConfig = areas.getArea(childIndex);
         children.add(_buildArea(
@@ -127,7 +127,7 @@ class LayoutFactory {
             children: children,);
       }
       if (parent is _TabsConfig) {
-        final List<DockingItem> items = [];
+        final List<DockingItem> items = <DockingItem>[];
         for (final DockingArea area in children) {
           items.add(area as DockingItem);
         }

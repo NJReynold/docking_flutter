@@ -258,7 +258,7 @@ class DockingItem extends DockingArea with DropArea {
     double? minimalWeight,
     double? minimalSize,
     double? maximumSize,
-  })  : buttons = buttons != null ? List.unmodifiable(buttons) : [],
+  })  : buttons = buttons != null ? List.unmodifiable(buttons) : <TabButton>[],
         globalKey = keepAlive ? GlobalKey() : null,
         _maximized = maximized,
         super(
@@ -311,7 +311,7 @@ class DockingItem extends DockingArea with DropArea {
 class DockingRow extends DockingParentArea {
   /// Builds a [DockingRow].
   factory DockingRow(List<DockingArea> children, {dynamic id, double? size, double? weight, double? minimalWeight, double? minimalSize}) {
-    final List<DockingArea> newChildren = [];
+    final List<DockingArea> newChildren = <DockingArea>[];
     for (final DockingArea child in children) {
       if (child is DockingRow) {
         newChildren.addAll(child._children);
@@ -345,7 +345,7 @@ class DockingRow extends DockingParentArea {
 class DockingColumn extends DockingParentArea {
   /// Builds a [DockingColumn].
   factory DockingColumn(List<DockingArea> children, {dynamic id, double? size, double? weight, double? minimalWeight, double? minimalSize}) {
-    final List<DockingArea> newChildren = [];
+    final List<DockingArea> newChildren = <DockingArea>[];
     for (final DockingArea child in children) {
       if (child is DockingColumn) {
         newChildren.addAll(child._children);
@@ -451,7 +451,7 @@ class DockingLayout extends ChangeNotifier {
 
   /// Set a new root.
   set root(DockingArea? root) {
-    layoutAreas().forEach((area) => area._dispose());
+    layoutAreas().forEach((DockingArea area) => area._dispose());
     _root = root;
     _reset();
     notifyListeners();
@@ -465,7 +465,7 @@ class DockingLayout extends ChangeNotifier {
   void _reset() {
     _updateHierarchy();
     int maximizedCount = 0;
-    layoutAreas().forEach((area) {
+    layoutAreas().forEach((DockingArea area) {
       if (area is DockingItem && area.maximized) {
         maximizedCount++;
         _maximizedArea = area;
@@ -565,7 +565,7 @@ class DockingLayout extends ChangeNotifier {
 
   /// Removes maximized status from areas.
   void _removesMaximizedStatus() {
-    layoutAreas().forEach((area) {
+    layoutAreas().forEach((DockingArea area) {
       if (area is DockingItem) {
         area._maximized = false;
       } else if (area is DockingTabs) {
@@ -584,12 +584,12 @@ class DockingLayout extends ChangeNotifier {
   /// Moves a DockingItem in this layout.
   void moveItem({required DockingItem draggedItem, required DropArea targetArea, DropPosition? dropPosition, int? dropIndex}) {
     //TODO maximize test
-    _rebuild([MoveItem(draggedItem: draggedItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
+    _rebuild(<LayoutModifier>[MoveItem(draggedItem: draggedItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
   }
 
   /// Removes multiple DockingItem by id from this layout.
   void removeItemByIds(List<dynamic> ids) {
-    final List<LayoutModifier> modifiers = [];
+    final List<LayoutModifier> modifiers = <LayoutModifier>[];
     for (final dynamic id in ids) {
       modifiers.add(RemoveItemById(id: id));
     }
@@ -598,13 +598,13 @@ class DockingLayout extends ChangeNotifier {
 
   /// Removes a DockingItem from this layout.
   void removeItem({required DockingItem item}) {
-    _rebuild([RemoveItem(itemToRemove: item)]);
+    _rebuild(<LayoutModifier>[RemoveItem(itemToRemove: item)]);
   }
 
   /// Adds a DockingItem to this layout.
   void addItemOn({required DockingItem newItem, required DropArea targetArea, DropPosition? dropPosition, int? dropIndex}) {
     //TODO maximize test
-    _rebuild([AddItem(newItem: newItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
+    _rebuild(<LayoutModifier>[AddItem(newItem: newItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
   }
 
   /// Adds a DockingItem to the root of this layout.
@@ -614,7 +614,7 @@ class DockingLayout extends ChangeNotifier {
     }
     if (root is DropArea) {
       final DropArea targetArea = root! as DropArea;
-      _rebuild([AddItem(newItem: newItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
+      _rebuild(<LayoutModifier>[AddItem(newItem: newItem, targetArea: targetArea, dropPosition: dropPosition, dropIndex: dropIndex)]);
     } else {
       throw StateError('Root is not a DropArea');
     }
@@ -626,7 +626,7 @@ class DockingLayout extends ChangeNotifier {
     final List<DockingArea> olderAreas = layoutAreas();
 
     for (final LayoutModifier modifier in modifiers) {
-      layoutAreas().forEach((area) {
+      layoutAreas().forEach((DockingArea area) {
         if (area is DockingItem) {
           area._resetLocationInLayout();
         }
@@ -635,7 +635,7 @@ class DockingLayout extends ChangeNotifier {
       _root = modifier.newLayout(this);
       _updateHierarchy();
 
-      for (final area in olderAreas) {
+      for (final DockingArea area in olderAreas) {
         if (area is DockingParentArea) {
           area._dispose();
         } else if (area is DockingItem) {
@@ -646,7 +646,7 @@ class DockingLayout extends ChangeNotifier {
       }
     }
     _maximizedArea = null;
-    layoutAreas().forEach((area) {
+    layoutAreas().forEach((DockingArea area) {
       if (area is DockingItem && area.maximized) {
         _maximizedArea = area;
       } else if (area is DockingTabs && area.maximized) {
@@ -659,7 +659,7 @@ class DockingLayout extends ChangeNotifier {
 
   /// Gets all [DockingArea] from this layout.
   List<DockingArea> layoutAreas() {
-    final List<DockingArea> list = [];
+    final List<DockingArea> list = <DockingArea>[];
     if (_root != null) {
       _fetchAreas(list, _root!);
     }

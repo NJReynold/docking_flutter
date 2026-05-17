@@ -62,32 +62,32 @@ class DropItem extends LayoutModifier {
       } else if (dockingItem == targetArea) {
         final DockingItem newDraggedItem = dropItem;
         if (dropIndex == 0) {
-          return DockingTabs([newDraggedItem, dockingItem],
+          return DockingTabs(<DockingItem>[newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
         } else if (dropIndex == 1) {
-          return DockingTabs([dockingItem, newDraggedItem],
+          return DockingTabs(<DockingItem>[dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.top) {
-          return DockingColumn([newDraggedItem, dockingItem],
+          return DockingColumn(<DockingArea>[newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.bottom) {
-          return DockingColumn([dockingItem, newDraggedItem],
+          return DockingColumn(<DockingArea>[dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.left) {
-          return DockingRow([newDraggedItem, dockingItem],
+          return DockingRow(<DockingArea>[newDraggedItem, dockingItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
         } else if (dropPosition == DropPosition.right) {
-          return DockingRow([dockingItem, newDraggedItem],
+          return DockingRow(<DockingArea>[dockingItem, newDraggedItem],
               weight: dockingItem.weight,
               minimalSize: dockingItem.minimalSize,
               minimalWeight: dockingItem.minimalWeight,);
@@ -99,7 +99,7 @@ class DropItem extends LayoutModifier {
       return area;
     } else if (area is DockingTabs) {
       final DockingTabs dockingTabs = area;
-      final List<DockingItem> children = [];
+      final List<DockingItem> children = <DockingItem>[];
       DockingItem? oldSelection;
       int oldIndex = -1;
       for (int index = 0; index < dockingTabs.childrenCount; index++) {
@@ -159,13 +159,13 @@ class DropItem extends LayoutModifier {
           }
           return newDockingTabs;
         } else if (dropPosition == DropPosition.top) {
-          return DockingColumn([newDraggedItem, newArea]);
+          return DockingColumn(<DockingArea>[newDraggedItem, newArea]);
         } else if (dropPosition == DropPosition.bottom) {
-          return DockingColumn([newArea, newDraggedItem]);
+          return DockingColumn(<DockingArea>[newArea, newDraggedItem]);
         } else if (dropPosition == DropPosition.left) {
-          return DockingRow([newDraggedItem, newArea]);
+          return DockingRow(<DockingArea>[newDraggedItem, newArea]);
         } else if (dropPosition == DropPosition.right) {
-          return DockingRow([newArea, newDraggedItem]);
+          return DockingRow(<DockingArea>[newArea, newDraggedItem]);
         } else {
           throw ArgumentError(
               'DropPosition not recognized: $dropPosition',);
@@ -173,8 +173,8 @@ class DropItem extends LayoutModifier {
       }
       return newArea;
     } else if (area is DockingParentArea) {
-      final List<DockingArea> children = [];
-      area.forEach((child) {
+      final List<DockingArea> children = <DockingArea>[];
+      area.forEach((DockingArea child) {
         final DockingArea? newChild = _buildLayout(child);
         if (newChild != null) {
           children.add(newChild);

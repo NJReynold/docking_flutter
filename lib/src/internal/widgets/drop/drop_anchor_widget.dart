@@ -2,6 +2,7 @@ import 'package:docking/src/internal/debug.dart';
 import 'package:docking/src/layout/docking_layout.dart';
 import 'package:docking/src/layout/drop_position.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/gestures/events.dart';
 import 'package:meta/meta.dart';
 import 'package:tabbed_view/tabbed_view.dart';
 
@@ -20,7 +21,7 @@ abstract class DropAnchorBaseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
         hitTestBehavior: HitTestBehavior.translucent,
-        onExit: (e) => listener(null),
+        onExit: (PointerExitEvent e) => listener(null),
         child: DragTarget<Draggable<DraggableTabData>>(
             builder: _buildDropWidget,
             onWillAcceptWithDetails: (DragTargetDetails<Draggable<DraggableTabData>> details) {

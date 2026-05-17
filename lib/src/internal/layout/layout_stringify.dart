@@ -84,7 +84,7 @@ class LayoutStringify {
   /// Example: 3;id1;.2
   static String stringifyArea(
       {required LayoutParser parser, required DockingArea area,}) {
-    final List<String> data = [];
+    final List<String> data = <String>[];
     // ID_LENGTH and ID
     final String id = parser.idToString(area.id);
     data.add(id.length.toString());
@@ -123,7 +123,7 @@ class LayoutStringify {
   /// Example:
   /// 4,5,6
   static String stringifyParent({required DockingParentArea parent}) {
-    final List<String> indexes = [];
+    final List<String> indexes = <String>[];
     for (int i = 0; i < parent.childrenCount; i++) {
       final DockingArea child = parent.childAt(i);
       if (child.index == -1) {

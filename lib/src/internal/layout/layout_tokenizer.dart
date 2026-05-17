@@ -28,8 +28,8 @@ class Tokenizer {
     if (token.isEmpty) {
       throw StateError('Parent without child.');
     }
-    final List<int> indexes = [];
-    token.split(',').forEach((str) {
+    final List<int> indexes = <int>[];
+    token.split(',').forEach((String str) {
       final int? index = int.tryParse(str);
       if (index == null) {
         throw StateError('Invalid index: $str');

@@ -11,9 +11,9 @@ void main() {
       final DockingItem itemC = dockingItem('c');
       final DockingItem itemD = dockingItem('d');
       final DockingItem itemE = dockingItem('e');
-      final DockingRow row = DockingRow([itemB, itemC]);
-      final DockingTabs tabs = DockingTabs([itemD, itemE]);
-      final DockingColumn column = DockingColumn([itemA, row, tabs]);
+      final DockingRow row = DockingRow(<DockingArea>[itemB, itemC]);
+      final DockingTabs tabs = DockingTabs(<DockingItem>[itemD, itemE]);
+      final DockingColumn column = DockingColumn(<DockingArea>[itemA, row, tabs]);
       final DockingLayout layout = DockingLayout(root: column);
       expect(column.index, 1);
       expect(itemA.index, 2);
