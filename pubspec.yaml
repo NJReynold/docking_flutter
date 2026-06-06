@@ -13,10 +13,14 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.7.0
-  multi_split_view: #'>=2.4.0 <2.5.0'
-    path: ../multi_split_view/
-  tabbed_view: #'>=1.18.0 <1.19.0'
-    path: ../tabbed_view/
+  multi_split_view:
+    git:
+      url: git@github.com:NJReynold/multi_split_view.git
+      ref: main
+  tabbed_view: 
+    git:
+      url: git@github.com:NJReynold/tabbed_view.git
+      ref: main
 
 dev_dependencies:
   flutter_lints: ^2.0.2
