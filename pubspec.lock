@@ -126,10 +126,12 @@ packages:
   multi_split_view:
     dependency: "direct main"
     description:
-      path: "../multi_split_view"
-      relative: true
-    source: path
-    version: "3.6.1"
+      path: "."
+      ref: main
+      resolved-ref: c38e58d494ce44b94597766dfdac91c407dbbb1c
+      url: "git@github.com:NJReynold/multi_split_view.git"
+    source: git
+    version: "3.6.2"
   path:
     dependency: transitive
     description:
@@ -178,9 +180,11 @@ packages:
   tabbed_view:
     dependency: "direct main"
     description:
-      path: "../tabbed_view"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: b915d34fcfc332e5d9d44970e09b9085af14585f
+      url: "git@github.com:NJReynold/tabbed_view.git"
+    source: git
     version: "3.1.0"
   term_glyph:
     dependency: transitive
